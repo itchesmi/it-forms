@@ -1,0 +1,414 @@
+/* Import a modern, professional font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+    /* Define the color palette for easy management */
+    --chesmi-red: #cc3333;
+    --chesmi-dark-red: #a32a2a;
+    --background-color: #f0f2f5; /* A soft grey background for a modern app feel */
+    --form-background: #ffffff;
+    --border-color: #d9d9d9;
+    --text-color: #333;
+    --label-color: #555;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+body {
+    /* Use the new font and background color */
+    font-family: 'Poppins', 'Segoe UI', Tahoma, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-color);
+}
+
+/* A4 Page Styling for print and web display */
+.a4-page {
+    width: 210mm;
+    min-height: 297mm;
+    background-color: var(--form-background);
+    box-shadow: var(--shadow);
+    margin: 20px 0;
+    padding: 25mm;
+    box-sizing: border-box;
+    border-radius: 8px; /* Slightly rounded corners for a softer look */
+    border-top: 5px solid var(--chesmi-red); /* A strong brand accent at the top */
+}
+
+/* Header Styling */
+header {
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 5px;
+}
+
+.logo-container img {
+    height: 30px; /* Slightly larger logo */
+    width: auto;
+}
+
+h1 {
+    font-size: 1.5em;
+    margin-top: 10px;
+    color: #333;
+    font-weight: 500;
+}
+
+h2 {
+    color: var(--chesmi-dark-red);
+    font-size: 1.3em;
+    border-bottom: 2px solid var(--chesmi-red);
+    padding-bottom: 8px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* Form Element Styling */
+.form-group {
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.form-group label {
+    font-weight: 500;
+    width: 180px;
+    flex-shrink: 0;
+    color: var(--label-color);
+}
+
+.input-container {
+    flex-grow: 1;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    box-sizing: border-box;
+    background-color: #fafafa;
+    transition: all 0.2s ease-in-out;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95em;
+}
+
+input:focus, textarea:focus {
+    border-color: var(--chesmi-red);
+    box-shadow: 0 0 0 3px rgba(204, 51, 51, 0.15); /* A subtle glow on focus */
+    background-color: white;
+    outline: none;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table th, table td {
+    border: 1px solid #e9e9e9;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+th {
+    background-color: #f9f9f9;
+    color: var(--chesmi-dark-red);
+    font-weight: 600;
+}
+
+/* Signature Styling */
+.signature-block {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+.signature-field {
+    flex: 1;
+}
+.signature-line {
+    border-bottom: 1px solid #333;
+    height: 40px;
+    margin-bottom: 8px;
+}
+.signature-label {
+    font-size: 0.8em;
+    color: #666;
+    text-align: center;
+}
+
+/* Action Buttons (outside the form) */
+.form-actions {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.form-actions button,
+.no-print button {
+    background-color: var(--chesmi-red);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1em;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.form-actions button:hover,
+.no-print button:hover {
+    background-color: var(--chesmi-dark-red);
+    transform: translateY(-2px);
+}
+.remove-asset-btn {
+    background-color: #6c757d !important;
+}
+.remove-asset-btn:hover {
+    background-color: #5a6268 !important;
+}
+
+
+/* Print Specific Styles */
+@media print {
+    body {
+        background-color: white;
+        padding: 0;
+        margin: 0;
+    }
+    .a4-page {
+        box-shadow: none;
+        margin: 0;
+        border-radius: 0;
+        border-top: none;
+        min-height: 0;
+    }
+    .form-actions, .no-print {
+        display: none !important;
+    }
+    input:not([type="checkbox"]):not([type="radio"]), 
+    textarea {
+        border: none !important;
+        border-bottom: 1px dotted #555 !important;
+        background-color: transparent !important;
+        border-radius: 0 !important;
+        padding: 2px 0 !important;
+        box-shadow: none !important;
+    }
+    h2 {
+        border-color: #ccc;
+    }
+}
+
+/* Portal Specific Styles (index.html) */
+.portal-container {
+    width: 100%;
+    max-width: 900px;
+    min-height: auto;
+}
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+.form-card {
+    background-color: white;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+.form-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+.form-card h3 { margin-top: 0; }
+.form-card p { flex-grow: 1; color: #555; }
+a.portal-link {
+    display: block;
+    background-color: var(--chesmi-red);
+    color: white !important;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 500;
+    margin-top: 15px;
+    transition: background-color 0.2s;
+}
+a.portal-link:hover {
+    background-color: var(--chesmi-dark-red);
+}
+
+/* --- Background Animation for Index Page --- */
+.portal-home {
+    /* Ensures the background covers the whole page */
+    background: #f0f2f5;
+    overflow-x: hidden; /* Prevents horizontal scrollbar */
+}
+
+.portal-home::before {
+    content: '';
+    position: fixed; /* Stays in place during scroll */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1; /* Sits behind all content */
+    background: linear-gradient(
+        -45deg, 
+        #ee7752, 
+        #e73c7e, 
+        #23a6d5, 
+        #23d5ab
+    );
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+    opacity: 0.1; /* Very subtle effect */
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Style for the new buttons */
+.email-btn {
+    background-color: #007bff !important;
+}
+.email-btn:hover {
+    background-color: #0056b3 !important;
+}
+.print-btn {
+    background-color: #6c757d !important;
+}
+.print-btn:hover {
+    background-color: #5a6268 !important;
+}
+
+
+/* --- PDF Snapshot Styles --- */
+/* This class is added via JavaScript only during PDF generation */
+.pdf-snapshot .a4-page {
+    /* Reduce font size for better fitting */
+    font-size: 0.9em;
+}
+
+.pdf-snapshot .form-group {
+    display: grid;
+    grid-template-columns: 180px 1fr; /* Rigid grid to prevent collapsing */
+    align-items: center;
+    margin-bottom: 12px; /* Reduce margin to tighten layout */
+}
+
+.pdf-snapshot h2 {
+    /* Prevents awkward wrapping of headings */
+    display: flex;
+    white-space: nowrap;
+}
+
+.pdf-snapshot input[type="text"],
+.pdf-snapshot input[type="email"],
+.pdf-snapshot input[type="date"],
+.pdf-snapshot textarea {
+    /* Make inputs look like underlined text for the PDF */
+    border: none !important;
+    border-bottom: 1px solid #555 !important;
+    border-radius: 0 !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    padding: 2px 0 !important;
+}
+
+/* Simple rendering for checkboxes and radio buttons to avoid strange characters */
+.pdf-snapshot input[type="checkbox"],
+.pdf-snapshot input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    border: 1px solid #333;
+    vertical-align: middle;
+    position: relative;
+    top: -2px;
+}
+.pdf-snapshot input[type="radio"] {
+    border-radius: 50%;
+}
+.pdf-snapshot input[type="checkbox"]:checked::before,
+.pdf-snapshot input[type="radio"]:checked::before {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    background-color: #333;
+    margin: 2px;
+}
+.pdf-snapshot input[type="radio"]:checked::before {
+    border-radius: 50%;
+}
+
+/* Rule for forcing a page break in the laptop form */
+.pdf-snapshot #page-break-element {
+    display: block;
+    height: 10mm; /* Add extra space to push content to the next page */
+    border: none;
+}
+/* ADD THIS TO THE END OF YOUR style.css FILE */
+
+/* Styles for the minimized condition checklist radios */
+.condition-radios {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+}
+.condition-radios input[type="radio"] {
+    margin-right: 5px;
+}
+.condition-radios label {
+    /* Override default form-group label styles */
+    width: auto;
+    font-weight: normal;
+    color: var(--text-color);
+    flex-shrink: 1;
+}
