@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mobile & POS Service Report</title>
+    <style>
+        /* Shared Styles (Simulated for standalone file) */
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f6f9; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-top: 5px solid #003366; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        h1 { color: #003366; margin: 0; }
+        .header-info { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #eef2f7; padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .section-title { background: #003366; color: white; padding: 8px 15px; font-weight: bold; border-radius: 4px; margin-top: 30px; }
+        .item-row { display: grid; grid-template-columns: 30px 2fr 1fr; gap: 10px; padding: 12px 0; border-bottom: 1px solid #eee; align-items: center; }
+        .status-select { padding: 5px; width: 100%; border-radius: 4px; border: 1px solid #ccc; }
+        @media print { body { padding:0; } .container { box-shadow: none; border: none; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h1>Mobile Device & POS Audit</h1>
+            <span style="background:#eee; padding:5px 10px; font-size:0.8em; font-weight:bold;">ISO 27001: Mobile Mgmt</span>
+        </div>
+
+        <div class="header-info">
+            <div><label>Device Type:</label> <select style="width:100%"><option>Mobile Phone</option><option>Tablet</option><option>POS Terminal</option></select></div>
+            <div><label>Asset Tag / S/N:</label> <input type="text" style="width:100%" placeholder="S/N..."></div>
+            <div><label>Assigned User/Loc:</label> <input type="text" style="width:100%" placeholder="Store/User..."></div>
+            <div><label>Date:</label> <input type="date" style="width:100%"></div>
+        </div>
+
+        <div class="section-title">1. Physical Condition</div>
+        <div class="item-row"><input type="checkbox"> <span><strong>Screen / Touch Digitizer</strong><br><small>No cracks, dead spots, or ghost touch.</small></span> <select class="status-select"><option>Pass</option><option>Fail</option></select></div>
+        <div class="item-row"><input type="checkbox"> <span><strong>Charging Port / Contacts</strong><br><small>Cable fits tight; POS dock pins clean.</small></span> <select class="status-select"><option>Pass</option><option>Fail</option></select></div>
+        <div class="item-row"><input type="checkbox"> <span><strong>Battery Health</strong><br><small>No swelling; Holds charge > 80%.</small></span> <select class="status-select"><option>Pass</option><option>Fail</option></select></div>
+
+        <div class="section-title">2. OS & Security (MDM)</div>
+        <div class="item-row"><input type="checkbox"> <span><strong>OS / Firmware Update</strong><br><small>Latest Security Patch Installed.</small></span> <select class="status-select"><option>Pass</option><option>Fail</option></select></div>
+        <div class="item-row"><input type="checkbox"> <span><strong>Device Encryption / Pin</strong><br><small>Screen lock active. Developer mode OFF.</small></span> <select class="status-select"><option>Pass</option><option>Fail</option></select></div>
+        <div class="item-row"><input type="checkbox"> <span><strong>Unauthorized Apps</strong><br><small>No sideloaded APKs or Games.</small></span> <select class="status-select"><option>Clean</option><option>Detected</option></select></div>
+
+        <div class="section-title">3. POS Specifics (If Applicable)</div>
+        <div class="item-row"><input type="checkbox"> <span><strong>Thermal Printer</strong><br><small>Prints clear test receipt; Roller clean.</small></span> <select class="status-select"><option>N/A</option><option>Pass</option><option>Fail</option></select></div>
+        <div class="item-row"><input type="checkbox"> <span><strong>Card Reader / NFC</strong><br><small>Reads Chip/Tap successfully.</small></span> <select class="status-select"><option>N/A</option><option>Pass</option><option>Fail</option></select></div>
+        <div class="item-row"><input type="checkbox"> <span><strong>Sim Card / 4G Data</strong><br><small>APN settings correct; Data active.</small></span> <select class="status-select"><option>N/A</option><option>Pass</option><option>Fail</option></select></div>
+
+        <div style="margin-top:30px;">
+            <label><strong>Technician Notes:</strong></label>
+            <textarea style="width:100%; height:60px; border:1px solid #ccc;"></textarea>
+        </div>
+        <button onclick="window.print()" style="margin-top:20px; padding:10px 20px; background:#28a745; color:white; border:none; cursor:pointer;">Print / Save PDF</button>
+    </div>
+</body>
+</html>
