@@ -48,15 +48,19 @@ body {
     align-items: center;
 }
 
+/* --- LOGO CSS --- */
 .brand {
     display: flex;
     align-items: center;
     gap: 15px;
+    height: 100%; /* Ensure it fills the nav height */
 }
 
 .nav-logo {
-    height: 45px; /* Adjust based on your actual logo file */
-    width: auto;
+    max-height: 50px; /* STRICT LIMIT: Fits inside the 70px navbar */
+    width: auto;      /* Maintains aspect ratio */
+    object-fit: contain; /* Prevents stretching */
+    display: block;
 }
 
 .brand-name {
@@ -146,16 +150,21 @@ body {
     transition: transform 0.3s ease;
 }
 
+/* --- UPDATED FOLDER ANIMATION CSS --- */
 .folder-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease-out;
+    /* Animate padding so it disappears smoothly */
+    transition: max-height 0.3s ease-out, padding 0.3s ease; 
     background-color: #fcfcfc;
+    padding: 0 30px; /* Default closed state has 0 vertical padding */
+    opacity: 0;
 }
 
 .folder-content.open {
+    opacity: 1;
     border-top: 1px solid var(--border);
-    padding: 30px;
+    /* Padding is applied dynamically by JS or can be set here if not using JS calculation */
 }
 
 /* --- GRID & CARDS --- */
