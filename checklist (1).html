@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master IT Service & ISO Compliance Report</title>
+    <style>
+        :root {
+            --primary-color: #003366; /* Enterprise Navy */
+            --accent-color: #0056b3;
+            --bg-color: #f4f6f9;
+            --iso-bg: #fffbe6; /* Light Yellow for ISO items */
+            --iso-border: #ffc107;
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            border-top: 8px solid var(--primary-color);
+        }
+
+        /* HEADER & INFO */
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        h1 { margin: 0; color: var(--primary-color); font-size: 1.8rem; }
+        .sub-header { color: #666; font-size: 0.9rem; margin-top: 5px; }
+
+        .iso-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            background: #eef2f7;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        /* SECTIONS */
+        .section-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            margin-top: 40px;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* CHECKLIST GRID */
+        .checklist-item {
+            display: grid;
+            grid-template-columns: 30px 2.5fr 3fr 1fr; /* Checkbox | Text | Image | Status */
+            gap: 20px;
+            padding: 15px 10px;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+            transition: background 0.2s;
+        }
+
+        .checklist-item:hover { background-color: #fafafa; }
+
+        /* Mandatory / ISO Highlight */
+        .iso-critical {
+            background-color: var(--iso-bg);
+            border-left: 4px solid var(--iso-border);
+        }
+
+        .item-title { font-weight: 700; color: #2c3e50; display: block; }
+        
+        .item-desc {
+            font-size: 0.85rem;
+            color: #555;
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        .cmd-hint {
+            display: inline-block;
+            background: #eee;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.8rem;
+            color: #d63384;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+        }
+
+        /* IMAGE UPLOAD BOX */
+        .image-box {
+            position: relative;
+            width: 100%;
+            height: 100px;
+            border: 2px dashed #cbd5e0;
+            border-radius: 6px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .image-box:hover { border-color: var(--accent-color); background: #f0f7ff; }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+
+        .image-box span {
+            font-size: 0.75rem;
+            color: #718096;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        /* STATUS SELECT */
+        select.status-select {
+            padding: 8px;
+            width: 100%;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* FOOTER & BUTTONS */
+        .comments-section { margin-top: 30px; }
+        .comments-section textarea {
+            width: 100%; height: 80px; padding: 10px;
+            border: 1px solid #ccc; border-radius: 4px;
+        }
+
+        .signatures {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            page-break-inside: avoid;
+        }
+        .sig-box { border-top: 1px solid #ccc; padding-top: 10px; }
+
+        .fab-print {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            background-color: var(--success);
+            color: white;
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 999;
+        }
+        .fab-print:hover { transform: scale(1.1); }
+
+        @media print {
+            .fab-print { display: none; }
+            body { padding: 0; background: white; }
+            .container { box-shadow: none; border: none; width: 100%; max-width: 100%; padding: 0; }
+            .image-box { border: 1px solid #ddd; }
+            .checklist-item { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<button class="fab-print" onclick="window.print()" title="Save as PDF">🖨️</button>
+
+<div class="container">
+    
+    <div class="header-top">
+        <div>
+            <h1>IT Service & Compliance Report</h1>
+            <div class="sub-header">System Maintenance • Security Audit • ISO 27001 Compliance</div>
+        </div>
+        <div class="iso-badge">Confidential</div>
+    </div>
+
+    <div class="info-grid">
+        <div class="form-group"><label>Ticket ID</label><input type="text" placeholder="TKT-202X-000"></div>
+        <div class="form-group"><label>Date</label><input type="date" id="datePicker"></div>
+        <div class="form-group"><label>Technician</label><input type="text" placeholder="Name"></div>
+        <div class="form-group"><label>User / Owner</label><input type="text" placeholder="Name"></div>
+        <div class="form-group"><label>Department</label><input type="text" placeholder="Dept"></div>
+        <div class="form-group"><label>Serial / Asset Tag</label><input type="text" placeholder="S/N"></div>
+    </div>
+
+    <form id="mainForm">
+
+        <div class="section-header">
+            <span>1. Access Control & Security (ISO 27001)</span>
+            <span>🔒</span>
+        </div>
+
+        <div class="checklist-item iso-critical">
+            <input type="checkbox">
+            <div>
+                <span class="item-title">AD Domain Trust Relationship</span>
+                <div class="item-desc">Verify laptop communicates with Domain Controller.</div>
+                <div class="cmd-hint">nltest /dsgetdc:YOURDOMAIN</div>
+            </div>
+            <div class="image-box" onclick="triggerUpload(this)">
+                <span>📷 Add Proof<br>(CMD Output)</span>
+                <input type="file" hidden accept="image/*" onchange="previewImage(this)">
+                <img src="" alt="Proof">
+            </div>
+            <select class="status-select" onchange="colorStatus(this)"><option>Select</option><option>Pass</option><option>Fail</option></select>
+        </div>
+
+        <div class="checklist-item iso-critical">
+            <input type="checkbox">
+            <div>
+                <span class="item-title">Least Privilege Check</span>
+                <div class="item-desc">Confirm User is NOT in local Administrators group.</div>
+                <div class="cmd-hint">lusrmgr.msc > Groups > Admin</div>
+            </div>
+            <div class="image-box" onclick="triggerUpload(this)">
+                <span>📷 Add Proof<br>(Group Members)</span>
+                <input type="file" hidden accept="image/*" onchange="previewImage(this)">
+                <img src="" alt="Proof">
+            </div>
+            <select class="status-select" onchange="colorStatus(this)"><option>Select</option><option>Pass</option><option>Fail</option></select>
+        </div>
+
+        <div class="checklist-item iso-critical">
+            <input type="checkbox">
+            <div>
+                <span class="item-title">BitLocker Encryption</span>
+                <div class="item-desc">Drive C: must be Fully Encrypted (100%).</div>
+                <div class="cmd-hint">manage-bde -status</div>
+            </div>
+            <div class="image-box" onclick="triggerUpload(this)">
+                <span>📷 Add Proof<br>(Status Screen)</span>
+                <input type="file" hidden accept="image/*" onchange="previewImage(this)">
+                <img src="" alt="Proof">
+            </div>
+            <select class="status-select" onchange="colorStatus(this)"><option>Select</option><option>Pass</option><option>Fail</option></select>
+        </div>
+
+        <div class="section-header">
+            <span>2. Network & Connectivity</span>
+            <span>📶</span>
+        </div>
+
+        <div class="checklist-item">
+            <input type="checkbox">
+            <div>
+                <span class="item-title">Network Adaptor Health</span>
+                <div class="item-desc">Check Device Manager for driver errors on Wi-Fi/LAN.</div>
+            </div>
+            <div class="image-box" onclick="triggerUpload(this)">
+                <span>📷 Add Proof<br>(Device Mgr)</span>
+                <input type="file" hidden accept="image/*" onchange="previewImage(this)">
+                <img src="" alt="Proof">
+            </div>
+            <select class="status-select" onchange="colorStatus(this)"><option>Select</option><option>Pass</option><option>Fail</option></select>
+        </div>
+
+        <div class="checklist-item">
+            <input type="checkbox">
+            <div>
+                <span class="item-title">IP Config & Throughput</span>
+                <div class="item-desc">Verify DHCP/Static IP settings and Internet speed test.</div>
+                <div class="cmd-hint">ipconfig /all</div>
+            </div>
+            <div class="image-box" onclick="triggerUpload(this)">
+                <span>📷 Add Proof<br>(SpeedTest/CMD)</span>
+                <input type="file" hidden accept="image/*" onchange="previewImage(this)">
+                <img src="" alt="Proof">
+            </div>
+            <select class="status-select" onchange="colorStatus(this)"><option>Select</option><option>Pass</option><option>Fail</option></select>
+        </div>
+
+        <div class="section-header">
+            <span>3. Hardware Health & Events</span>
+            <span>💻</span>
+        </div>
+
+        <div class="checklist-item">
+            <input type="checkbox">
+            <div>
+                <span class="item-title">Event Viewer Analysis</span>
+                <div class="item-desc">Check System logs for critical 'Disk' or 'Kernel' errors.</div>
+            </div>
+            <div class="image-box" onclick="triggerUpload(this)">
+                <span>📷 Add Proof<br>(Event Logs)</span>
+                <input type="file" hidden accept="image/*" onchange="previewImage(this)">
+                <img src="" alt="Proof">
+            </div>
+            <select class="status-select" onchange="colorStatus(this)"><option>Select</option><option>Pass</option><option>Fail</option></select>
+        </div>
+
+        <div class="checklist-item">
+            <input type="checkbox">
+            <div>
+                <span class="item-title">Battery Health Report</span>
+                <div class="item-desc">Generate report. Check Design Capacity vs Full Charge.</div>
+                <div class="cmd-hint">powercfg /batteryreport</div>
+            </div>
+            <div class="image-box" onclick="triggerUpload(this)">
+                <span>📷 Add Proof<br>(HTML Report)</span>
+                <input type="file" hidden accept="image/*" onchange="previewImage(this)">
+                <img src="" alt="Proof">
+            </div>
+            <select class="status-select" onchange="colorStatus(this)"><option>Select</option><option>Pass</option><option>Fail</option></select>
+        </div>
+
+         <div class="checklist-item">
+            <input type="checkbox">
+            <div>
+                <span class="item-title">BIOS & Boot</span>
+                <div class="item-desc">Verify BIOS Version is current & Secure Boot enabled.</div>
+            </div>
+            <select class="status-select" onchange="colorStatus(this)"><option>Select</option><option>Pass</option><option>Fail</option></select>
+        </div>
+
+        <div class="section-header">
+            <span>4. Software, Updates & Hygiene</span>
+            <span>💾</span>
+        </div>
+
+        <div class="checklist-item iso-critical">
+            <input type="checkbox">
+            <div>
+                <span class="item-title">OS Patch Management</span>
+                <div class="item-desc">Windows Update must say "You're up to date" (Checked Today).</div>
+            </div>
+            <div class="image-box" onclick="triggerUpload(this)">
+                <span>📷 Add Proof<br>(Update Screen)</span>
+                <input type="file" hidden accept="image/*" onchange="previewImage(this)">
+                <img src="" alt="Proof">
+            </div>
+            <select class="status-select" onchange="colorStatus(this)"><option>Select</option><option>Pass</option><option>Fail</option></select>
+        </div>
+
+        <div class="checklist-item">
+            <input type="checkbox">
+            <div>
+                <span class="item-title">Office 365 License</span>
+                <div class="item-desc">Verify Product is Activated / Subscription Active.</div>
+            </div>
+            <div class="image-box" onclick="triggerUpload(this)">
+                <span>📷 Add Proof<br>(Account Page)</span>
+                <input type="file" hidden accept="image/*" onchange="previewImage(this)">
+                <img src="" alt="Proof">
+            </div>
+            <select class="status-select" onchange="colorStatus(this)"><option>Select</option><option>Pass</option><option>Fail</option></select>
+        </div>
+
+        <div class="checklist-item iso-critical">
+            <input type="checkbox">
+            <div>
+                <span class="item-title">Unauthorized Software (ISO)</span>
+                <div class="item-desc">Scan for Torrent clients, Cracked Games, or Unlicensed tools.</div>
+            </div>
+            <select class="status-select" onchange="colorStatus(this)"><option>Select</option><option>Clean</option><option>Detected/Removed</option></select>
+        </div>
+
+        <div class="checklist-item">
+            <input type="checkbox">
+            <div>
+                <span class="item-title">Disk Cleanup & Temp Files</span>
+                <div class="item-desc">Clear Temp, Prefetch, and Recycle Bin.</div>
+            </div>
+            <select class="status-select" onchange="colorStatus(this)"><option>Select</option><option>Pass</option><option>Fail</option></select>
+        </div>
+
+        <div class="section-header">
+            <span>5. Physical & Peripherals</span>
+            <span>🧹</span>
+        </div>
+
+        <div class="checklist-item">
+            <input type="checkbox">
+            <div>
+                <span class="item-title">Internal Cleaning</span>
+                <div class="item-desc">Airflow/Fans blown out. Dust removed from vents.</div>
+            </div>
+            <select class="status-select" onchange="colorStatus(this)"><option>Select</option><option>Done</option><option>N/A</option></select>
+        </div>
+
+        <div class="checklist-item">
+            <input type="checkbox">
+            <div>
+                <span class="item-title">Exterior & Peripherals</span>
+                <div class="item-desc">Clean Screen/Keyboard. Check Mouse, UPS, Printer connections.</div>
+            </div>
+            <select class="status-select" onchange="colorStatus(this)"><option>Select</option><option>Pass</option><option>Fail</option></select>
+        </div>
+
+        <div class="comments-section">
+            <label><strong>Technician Observations / Parts Replaced:</strong></label>
+            <textarea placeholder="e.g. Replaced CMOS battery, updated BIOS from v1.2 to v1.4..."></textarea>
+        </div>
+
+        <div class="signatures">
+            <div class="sig-box">
+                <label>IT Technician Signature</label>
+                <br><br>__________________________
+            </div>
+            <div class="sig-box">
+                <label>User Acknowledgement</label>
+                <div style="font-size: 0.8rem; color:#666;">I confirm my data is accessible and device is clean.</div>
+                <br>__________________________
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    // 1. Auto-set Date
+    document.getElementById('datePicker').valueAsDate = new Date();
+
+    // 2. Click-to-Upload Logic
+    function triggerUpload(box) {
+        const input = box.querySelector('input');
+        input.click();
+    }
+
+    // 3. Image Preview Logic
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const box = input.parentElement;
+                const img = box.querySelector('img');
+                const span = box.querySelector('span');
+                
+                img.src = e.target.result;
+                img.style.display = 'block';
+                span.style.display = 'none'; // Hide text
+                box.style.border = '1px solid #ccc'; // Remove dashed border
+                box.style.backgroundColor = '#fff';
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    // 4. Status Color Logic
+    function colorStatus(select) {
+        const val = select.value;
+        // Green conditions
+        if(['Pass', 'Done', 'Clean', 'Yes'].includes(val)) {
+            select.style.color = '#155724';
+            select.style.backgroundColor = '#d4edda';
+            select.style.borderColor = '#c3e6cb';
+        } 
+        // Red conditions
+        else if (['Fail', 'Detected', 'No'].includes(val)) {
+            select.style.color = '#721c24';
+            select.style.backgroundColor = '#f8d7da';
+            select.style.borderColor = '#f5c6cb';
+        } 
+        // Default
+        else {
+            select.style.color = '#333';
+            select.style.backgroundColor = '#fff';
+            select.style.borderColor = '#ccc';
+        }
+    }
+</script>
+
+</body>
+</html>

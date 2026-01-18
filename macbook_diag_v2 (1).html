@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MacBook Diagnostic Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Print Styling - Clean & Professional */
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; -webkit-print-color-adjust: exact; margin: 0; padding: 0; }
+            .card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; page-break-inside: avoid; margin-bottom: 1rem; }
+            input, textarea { border: none; background: transparent; resize: none; }
+            .evidence-img { max-height: 120px; object-fit: contain; border: 1px solid #eee; }
+            /* Hide empty preview containers when printing */
+            .empty-preview { display: none; }
+        }
+        
+        /* Interactive States */
+        .status-btn { transition: all 0.2s; font-weight: 600; }
+        .pass-active { background-color: #10b981; color: white; border-color: #10b981; }
+        .fail-active { background-color: #ef4444; color: white; border-color: #ef4444; }
+        .row-fail { background-color: #fef2f2; border-left: 4px solid #ef4444; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans pb-20">
+
+    <header class="bg-slate-900 text-white p-4 shadow-md no-print sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl"></span>
+                <h1 class="text-xl font-bold tracking-wide">MacBook Diagnostic Tool</h1>
+            </div>
+            <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded text-sm font-semibold transition flex items-center gap-2 shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                </svg>
+                Save as PDF
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto p-6 space-y-6">
+
+        <section class="card bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+            <h2 class="text-lg font-bold text-slate-700 mb-4 border-b pb-2">📋 Ticket Information</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase">Technician Name</label>
+                    <input type="text" placeholder="Enter name..." class="w-full mt-1 p-2 border rounded bg-slate-50 focus:bg-white focus:ring-1 focus:ring-blue-200">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase">Inspection Date</label>
+                    <input type="date" id="dateField" class="w-full mt-1 p-2 border rounded bg-slate-50">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase">Device Model / Year</label>
+                    <input type="text" placeholder="e.g. MacBook Air M2 2022" class="w-full mt-1 p-2 border rounded bg-slate-50 focus:bg-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase">Client / Ticket #</label>
+                    <input type="text" placeholder="e.g. #88219" class="w-full mt-1 p-2 border rounded bg-slate-50 focus:bg-white">
+                </div>
+            </div>
+        </section>
+
+        <section class="card bg-white p-6 rounded-lg shadow-sm border border-slate-200 ring-1 ring-slate-200">
+            <div class="flex items-center gap-2 mb-4 border-b pb-2">
+                <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-bold">PHYSICAL</span>
+                <h2 class="text-lg font-bold text-slate-700">Section 0: Physical Inspection</h2>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="check-item p-3 border rounded bg-white" id="row-topcase">
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-slate-800">1. Top Case & Lid</h3>
+                            <p class="text-xs text-slate-500">Check for dents, deep scratches, or sticker residue.</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <label class="cursor-pointer bg-slate-100 hover:bg-slate-200 text-slate-600 px-2 py-1 rounded text-sm flex items-center gap-1 border border-slate-300 no-print" title="Upload Photo">
+                                📷 <input type="file" class="hidden" accept="image/*" onchange="previewRowImage(this, 'preview-topcase')">
+                            </label>
+                            <button onclick="setStatus('topcase', 'pass')" id="btn-pass-topcase" class="status-btn border border-green-500 text-green-600 px-3 py-1 rounded text-sm">Good</button>
+                            <button onclick="setStatus('topcase', 'fail')" id="btn-fail-topcase" class="status-btn border border-red-500 text-red-600 px-3 py-1 rounded text-sm">Damaged</button>
+                        </div>
+                    </div>
+                    <div id="preview-topcase" class="mt-2 hidden grid grid-cols-1 empty-preview"></div>
+                </div>
+
+                <div class="check-item p-3 border rounded bg-white" id="row-glass">
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-slate-800">2. Screen Glass & Bezel</h3>
+                            <p class="text-xs text-slate-500">Cracks, delamination (staingate), or rubber rot.</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <label class="cursor-pointer bg-slate-100 hover:bg-slate-200 text-slate-600 px-2 py-1 rounded text-sm flex items-center gap-1 border border-slate-300 no-print">
+                                📷 <input type="file" class="hidden" accept="image/*" onchange="previewRowImage(this, 'preview-glass')">
+                            </label>
+                            <button onclick="setStatus('glass', 'pass')" id="btn-pass-glass" class="status-btn border border-green-500 text-green-600 px-3 py-1 rounded text-sm">Clean</button>
+                            <button onclick="setStatus('glass', 'fail')" id="btn-fail-glass" class="status-btn border border-red-500 text-red-600 px-3 py-1 rounded text-sm">Damaged</button>
+                        </div>
+                    </div>
+                    <div id="preview-glass" class="mt-2 hidden grid grid-cols-1 empty-preview"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+            <h2 class="text-lg font-bold text-slate-700 mb-4 border-b pb-2">Section 1: Board Verification</h2>
+            <div class="space-y-4">
+                <div class="check-item p-3 border rounded hover:bg-slate-50 transition" id="row-serial">
+                    <div class="flex justify-between items-start md:items-center flex-col md:flex-row gap-2">
+                        <div class="flex-1 w-full">
+                            <h3 class="font-semibold text-slate-800">Serial Number Matching</h3>
+                            <div class="grid grid-cols-2 gap-2 mt-2 max-w-md">
+                                <input type="text" placeholder="macOS Serial..." class="text-xs p-2 border rounded bg-slate-50">
+                                <input type="text" placeholder="Case Engraving..." class="text-xs p-2 border rounded bg-slate-50">
+                            </div>
+                        </div>
+                        <div class="flex gap-2 mt-2 md:mt-0">
+                            <label class="cursor-pointer bg-slate-100 hover:bg-slate-200 text-slate-600 px-2 py-1 rounded text-sm flex items-center gap-1 border border-slate-300 no-print">
+                                📷 <input type="file" class="hidden" accept="image/*" onchange="previewRowImage(this, 'preview-serial')">
+                            </label>
+                            <button onclick="setStatus('serial', 'pass')" id="btn-pass-serial" class="status-btn border border-green-500 text-green-600 px-3 py-1 rounded text-sm">Match</button>
+                            <button onclick="setStatus('serial', 'fail')" id="btn-fail-serial" class="status-btn border border-red-500 text-red-600 px-3 py-1 rounded text-sm">Mismatch</button>
+                        </div>
+                    </div>
+                    <div id="preview-serial" class="mt-2 hidden grid grid-cols-1 empty-preview"></div>
+                </div>
+
+                <div class="check-item p-3 border rounded hover:bg-slate-50 transition" id="row-touch">
+                    <div class="flex justify-between items-center">
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-slate-800">Touch ID</h3>
+                            <p class="text-xs text-slate-500">Attempt to add a fingerprint.</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="setStatus('touch', 'pass')" id="btn-pass-touch" class="status-btn border border-green-500 text-green-600 px-3 py-1 rounded text-sm">Working</button>
+                            <button onclick="setStatus('touch', 'fail')" id="btn-fail-touch" class="status-btn border border-red-500 text-red-600 px-3 py-1 rounded text-sm">Failed</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="check-item p-3 border rounded hover:bg-slate-50 transition" id="row-truetone">
+                    <div class="flex justify-between items-center">
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-slate-800">True Tone</h3>
+                            <p class="text-xs text-slate-500">Is the option available in Display settings?</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="setStatus('truetone', 'pass')" id="btn-pass-truetone" class="status-btn border border-green-500 text-green-600 px-3 py-1 rounded text-sm">Available</button>
+                            <button onclick="setStatus('truetone', 'fail')" id="btn-fail-truetone" class="status-btn border border-red-500 text-red-600 px-3 py-1 rounded text-sm">Missing</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+            <h2 class="text-lg font-bold text-slate-700 mb-4 border-b pb-2">Section 2: Liquid "Ghosts"</h2>
+            <div class="space-y-4">
+                <div class="check-item p-3 border rounded hover:bg-slate-50 transition" id="row-hinge">
+                    <div class="flex justify-between items-center">
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-slate-800">The "Crunchy" Hinge</h3>
+                            <p class="text-xs text-slate-500">Sticky sound = residue.</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="setStatus('hinge', 'pass')" id="btn-pass-hinge" class="status-btn border border-green-500 text-green-600 px-3 py-1 rounded text-sm">Smooth</button>
+                            <button onclick="setStatus('hinge', 'fail')" id="btn-fail-hinge" class="status-btn border border-red-500 text-red-600 px-3 py-1 rounded text-sm">Crunchy</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="check-item p-3 border rounded hover:bg-slate-50 transition" id="row-screen">
+                    <div class="flex justify-between items-center">
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-slate-800">Screen Water Marks</h3>
+                            <p class="text-xs text-slate-500">White background @ 100% brightness.</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <label class="cursor-pointer bg-slate-100 hover:bg-slate-200 text-slate-600 px-2 py-1 rounded text-sm flex items-center gap-1 border border-slate-300 no-print">
+                                📷 <input type="file" class="hidden" accept="image/*" onchange="previewRowImage(this, 'preview-mura')">
+                            </label>
+                            <button onclick="setStatus('screen', 'pass')" id="btn-pass-screen" class="status-btn border border-green-500 text-green-600 px-3 py-1 rounded text-sm">Clean</button>
+                            <button onclick="setStatus('screen', 'fail')" id="btn-fail-screen" class="status-btn border border-red-500 text-red-600 px-3 py-1 rounded text-sm">Spots</button>
+                        </div>
+                    </div>
+                    <div id="preview-mura" class="mt-2 hidden grid grid-cols-1 empty-preview"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+            <h2 class="text-lg font-bold text-slate-700 mb-4 border-b pb-2">Section 3: Detailed Functional Audit</h2>
+            
+            <div class="space-y-4">
+                <div class="check-item p-3 border rounded hover:bg-slate-50 transition" id="row-keyboard">
+                    <div class="flex justify-between items-start">
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-slate-800">Keyboard Dead Zones</h3>
+                            <p class="text-xs text-slate-500 mt-1">Use <a href="https://keyboardtester.com" target="_blank" class="text-blue-600 underline">keyboardtester.com</a>.</p>
+                            <div class="mt-2 text-xs bg-yellow-50 p-2 rounded text-yellow-800 border border-yellow-100 inline-block">
+                                <strong>Tip:</strong> If Touch ID fails, check if the button still powers on/off the Mac.
+                            </div>
+                        </div>
+                        <div class="flex gap-2 flex-col items-end">
+                            <div class="flex gap-2">
+                                <button onclick="setStatus('keyboard', 'pass')" id="btn-pass-keyboard" class="status-btn border border-green-500 text-green-600 px-3 py-1 rounded text-sm">All OK</button>
+                                <button onclick="setStatus('keyboard', 'fail')" id="btn-fail-keyboard" class="status-btn border border-red-500 text-red-600 px-3 py-1 rounded text-sm">Fail</button>
+                            </div>
+                            <label class="cursor-pointer bg-blue-50 hover:bg-blue-100 text-blue-600 px-3 py-1 rounded text-sm flex items-center gap-1 border border-blue-200 no-print w-full justify-center">
+                                📤 Upload Screenshot
+                                <input type="file" class="hidden" accept="image/*" onchange="previewRowImage(this, 'preview-keyboard')">
+                            </label>
+                        </div>
+                    </div>
+                    <div id="preview-keyboard" class="mt-2 hidden grid grid-cols-1 empty-preview"></div>
+                    <input type="text" placeholder="Notes (e.g. 'Spacebar sticky')..." class="w-full text-xs p-2 mt-2 border rounded bg-slate-50">
+                </div>
+
+                <div class="check-item p-3 border rounded hover:bg-slate-50 transition" id="row-cam">
+                    <div class="flex justify-between items-center">
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-slate-800">Camera / Webcam</h3>
+                            <p class="text-xs text-slate-500">Open Photo Booth. Check for grain or green tint.</p>
+                        </div>
+                        <div class="flex gap-2">
+                             <button onclick="setStatus('cam', 'pass')" id="btn-pass-cam" class="status-btn border border-green-500 text-green-600 px-3 py-1 rounded text-sm">Clear</button>
+                             <button onclick="setStatus('cam', 'fail')" id="btn-fail-cam" class="status-btn border border-red-500 text-red-600 px-3 py-1 rounded text-sm">Distorted</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="check-item p-3 border rounded hover:bg-slate-50 transition" id="row-wifi">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="font-semibold text-slate-800">Wi-Fi Range</h3>
+                                <p class="text-xs text-slate-500">Test far from router.</p>
+                            </div>
+                             <div class="flex gap-2">
+                                 <button onclick="setStatus('wifi', 'pass')" id="btn-pass-wifi" class="status-btn border border-green-500 text-green-600 px-2 py-1 rounded text-xs">Strong</button>
+                                 <button onclick="setStatus('wifi', 'fail')" id="btn-fail-wifi" class="status-btn border border-red-500 text-red-600 px-2 py-1 rounded text-xs">Weak</button>
+                             </div>
+                        </div>
+                    </div>
+                    <div class="check-item p-3 border rounded hover:bg-slate-50 transition" id="row-bt">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="font-semibold text-slate-800">Bluetooth</h3>
+                                <p class="text-xs text-slate-500">Mouse/Audio stable?</p>
+                            </div>
+                             <div class="flex gap-2">
+                                 <button onclick="setStatus('bt', 'pass')" id="btn-pass-bt" class="status-btn border border-green-500 text-green-600 px-2 py-1 rounded text-xs">Stable</button>
+                                 <button onclick="setStatus('bt', 'fail')" id="btn-fail-bt" class="status-btn border border-red-500 text-red-600 px-2 py-1 rounded text-xs">Drops</button>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+            <h2 class="text-lg font-bold text-slate-700 mb-2">👨‍🔧 Technician's Final Verdict</h2>
+            <textarea class="w-full border rounded p-3 h-24 bg-slate-50 focus:bg-white" placeholder="Summary of findings..."></textarea>
+        </section>
+
+    </main>
+
+    <footer class="text-center text-slate-400 text-xs pb-8 no-print">
+        Generated for internal diagnostics.
+    </footer>
+
+    <script>
+        // Set today's date
+        document.getElementById('dateField').valueAsDate = new Date();
+
+        // Handle Pass/Fail Buttons
+        function setStatus(id, status) {
+            const row = document.getElementById('row-' + id);
+            const btnPass = document.getElementById('btn-pass-' + id);
+            const btnFail = document.getElementById('btn-fail-' + id);
+            
+            if(btnPass && btnFail) {
+                // Reset styling
+                btnPass.classList.remove('pass-active');
+                btnFail.classList.remove('fail-active');
+                
+                // Apply new styling
+                if (status === 'pass') btnPass.classList.add('pass-active');
+                if (status === 'fail') btnFail.classList.add('fail-active');
+            }
+            if(row) {
+                row.classList.remove('row-fail');
+                if (status === 'fail') row.classList.add('row-fail');
+            }
+        }
+
+        // Handle Image Previews
+        function previewRowImage(input, previewId) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const previewContainer = document.getElementById(previewId);
+                previewContainer.innerHTML = `
+                    <div class="relative inline-block mt-2">
+                        <img src="${e.target.result}" class="w-full h-auto max-h-48 object-contain bg-slate-100 rounded border border-slate-300">
+                        <div class="text-[10px] text-center text-slate-400 mt-1">Attached: ${file.name}</div>
+                    </div>
+                `;
+                previewContainer.classList.remove('hidden');
+                previewContainer.classList.remove('empty-preview');
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>
