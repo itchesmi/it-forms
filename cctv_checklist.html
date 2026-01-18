@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CCTV Surveillance Service Report</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f6f9; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-top: 5px solid #b91c1c; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        h1 { color: #b91c1c; margin: 0; }
+        .header-info { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #fff5f5; padding: 15px; margin: 20px 0; border-radius: 5px; }
+        .section-title { background: #b91c1c; color: white; padding: 8px 15px; font-weight: bold; border-radius: 4px; margin-top: 30px; }
+        .item-row { display: grid; grid-template-columns: 30px 2fr 1fr; gap: 10px; padding: 12px 0; border-bottom: 1px solid #eee; align-items: center; }
+        .status-select { padding: 5px; width: 100%; border-radius: 4px; }
+        @media print { body { padding:0; } .container { box-shadow: none; border: none; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h1>CCTV Maintenance Report</h1>
+            <span style="background:#eee; padding:5px 10px; font-size:0.8em; font-weight:bold;">Physical Security Audit</span>
+        </div>
+
+        <div class="header-info">
+            <div><label>Location / Branch:</label> <input type="text" style="width:100%"></div>
+            <div><label>NVR/DVR Model:</label> <input type="text" style="width:100%"></div>
+            <div><label>Technician:</label> <input type="text" style="width:100%"></div>
+            <div><label>Date:</label> <input type="date" style="width:100%"></div>
+        </div>
+
+        <div class="section-title">1. NVR / DVR System Status</div>
+        <div class="item-row"><input type="checkbox"> <span><strong>System Time Sync</strong><br><small>Time matches real-world time exactly.</small></span> <select class="status-select"><option>Pass</option><option>Fail</option></select></div>
+        <div class="item-row"><input type="checkbox"> <span><strong>HDD Recording Status</strong><br><small>Hard drives 'Normal'; No read/write errors.</small></span> <select class="status-select"><option>Pass</option><option>Fail</option></select></div>
+        <div class="item-row"><input type="checkbox"> <span><strong>Retention Period Check</strong><br><small>Verify playback exists for required days (e.g., 30 days).</small></span> <select class="status-select"><option>Pass</option><option>Fail</option></select></div>
+        <div class="item-row"><input type="checkbox"> <span><strong>Cooling & UPS</strong><br><small>Fan working; UPS battery backup healthy.</small></span> <select class="status-select"><option>Pass</option><option>Fail</option></select></div>
+
+        <div class="section-title">2. Camera Inspection</div>
+        <div class="item-row"><input type="checkbox"> <span><strong>Camera 1-4 (Entrance/Lobby)</strong><br><small>Focus sharp; No obstructions; Lens clean.</small></span> <select class="status-select"><option>Pass</option><option>Adjusted</option><option>Fail</option></select></div>
+        <div class="item-row"><input type="checkbox"> <span><strong>Camera 5-8 (Operations/Server Room)</strong><br><small>Focus sharp; No obstructions.</small></span> <select class="status-select"><option>Pass</option><option>Adjusted</option><option>Fail</option></select></div>
+        <div class="item-row"><input type="checkbox"> <span><strong>Night Vision / IR</strong><br><small>IR LEDs activate; Night view is clear.</small></span> <select class="status-select"><option>Pass</option><option>Fail</option></select></div>
+        <div class="item-row"><input type="checkbox"> <span><strong>Cabling & Connectors</strong><br><small>BNC/RJ45 connectors secure; No exposed wires.</small></span> <select class="status-select"><option>Pass</option><option>Rewired</option></select></div>
+
+        <div style="margin-top:30px;">
+            <label><strong>Faulty Cameras / HDD Replacement Notes:</strong></label>
+            <textarea style="width:100%; height:60px; border:1px solid #ccc;"></textarea>
+        </div>
+        <button onclick="window.print()" style="margin-top:20px; padding:10px 20px; background:#b91c1c; color:white; border:none; cursor:pointer;">Print / Save PDF</button>
+    </div>
+</body>
+</html>
