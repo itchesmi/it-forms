@@ -6,17 +6,18 @@
     <title>IT Service Management Portal | Chesmi</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="portal-body">
 
     <nav class="top-nav">
         <div class="nav-content">
             <div class="brand">
-                <div class="logo-placeholder">IT</div>
-                <span class="brand-name">Chesmi <span style="font-weight:400; opacity: 0.8;">Service Portal</span></span>
+                <img src="chesmi-logo.png" alt="Chesmi Logo" class="nav-logo">
+                <span class="brand-name">Service Portal</span>
             </div>
             <div class="user-profile">
-                <span class="iso-badge">ISO 27001 Compliant</span>
+                <span class="iso-badge"><i class="fas fa-shield-alt"></i> ISO 27001 Compliant</span>
                 <span class="user-name">IT Admin</span>
             </div>
         </div>
@@ -26,93 +27,109 @@
         
         <header class="page-header">
             <h1>Document Control Center</h1>
-            <p>Select a standardized form below to initiate workflows.</p>
+            <p>Select a departmental folder below to access standardized forms.</p>
         </header>
 
-        <div class="category-header">
-            <span class="cat-icon">🛠️</span> Technical Operations & Maintenance
+        <div class="folder-container">
+            <button class="folder-header" onclick="toggleFolder('tech-folder', this)">
+                <div class="folder-title">
+                    <span class="icon-box"><i class="fas fa-tools"></i></span>
+                    Technical Operations & Maintenance
+                </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </button>
+            
+            <div id="tech-folder" class="folder-content">
+                <div class="form-grid">
+                    <div class="form-card highlight-card">
+                        <div class="card-status status-critical">Mandatory</div>
+                        <h3>Windows & Server Checklist</h3>
+                        <p class="desc">Master maintenance report for Windows Laptops, Desktops, and Server infrastructure.</p>
+                        <div class="card-meta">
+                            <span><i class="fab fa-windows"></i> Windows</span>
+                            <span>Monthly</span>
+                        </div>
+                        <a href="checklist.html" class="action-btn">Launch Audit</a>
+                    </div>
+
+                    <div class="form-card">
+                        <h3>Apple Device Diagnostic</h3>
+                        <p class="desc">Hardware and cosmetic audit specifically for MacBooks and iMacs.</p>
+                        <div class="card-meta">
+                            <span><i class="fab fa-apple"></i> macOS</span>
+                            <span>Incident</span>
+                        </div>
+                        <a href="macbook_diag_v2.html" class="action-btn btn-outline">Open Diagnostics</a>
+                    </div>
+
+                    <div class="form-card">
+                        <h3>Mobile & POS Checklist</h3>
+                        <p class="desc">Audit for Android/iOS Phones, Tablets, and Handheld POS terminals.</p>
+                        <div class="card-meta">
+                            <span><i class="fas fa-mobile-alt"></i> Mobile</span>
+                            <span>Quarterly</span>
+                        </div>
+                        <a href="mobile_checklist.html" class="action-btn btn-outline">Open Mobile Form</a>
+                    </div>
+
+                    <div class="form-card">
+                        <h3>CCTV Service Report</h3>
+                        <p class="desc">Surveillance system audit covering NVR health and Camera recording.</p>
+                        <div class="card-meta">
+                            <span><i class="fas fa-video"></i> Security</span>
+                            <span>Bi-Monthly</span>
+                        </div>
+                        <a href="cctv_checklist.html" class="action-btn btn-outline">Open CCTV Form</a>
+                    </div>
+
+                    <div class="form-card">
+                        <h3>Printer Maintenance</h3>
+                        <p class="desc">Service log for Network Printers and Copiers (Toner, Rollers, Quality).</p>
+                        <div class="card-meta">
+                            <span><i class="fas fa-print"></i> Printer</span>
+                            <span>Monthly</span>
+                        </div>
+                        <a href="printer_checklist.html" class="action-btn btn-outline">Open Printer Form</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <div class="form-grid">
-            <div class="form-card highlight-card">
-                <div class="card-status status-critical">Mandatory</div>
-                <h3>Windows & Server Checklist</h3>
-                <p class="desc">Master maintenance report for Windows Laptops, Desktops, and Server infrastructure. Includes AD and Encryption checks.</p>
-                <div class="card-meta">
-                    <span>Target: Windows</span>
-                    <span>Freq: Monthly</span>
+
+        <div class="folder-container">
+            <button class="folder-header" onclick="toggleFolder('asset-folder', this)">
+                <div class="folder-title">
+                    <span class="icon-box"><i class="fas fa-clipboard-list"></i></span>
+                    Asset Lifecycle (HR/Admin)
                 </div>
-                <a href="checklist.html" class="action-btn">Launch Audit</a>
-            </div>
+                <i class="fas fa-chevron-down arrow-icon"></i>
+            </button>
+            
+            <div id="asset-folder" class="folder-content">
+                <div class="form-grid">
+                    <div class="form-card">
+                        <h3>1. Asset Handover Form</h3>
+                        <p class="desc">Formal record for issuance of IT assets to employees.</p>
+                        <a href="item-handover.html" class="text-link">Open Form &rarr;</a>
+                    </div>
 
-            <div class="form-card">
-                <h3>Apple Device Diagnostic</h3>
-                <p class="desc">Hardware and cosmetic audit specifically for MacBooks, iMacs, and Apple peripherals.</p>
-                <div class="card-meta">
-                    <span>Target: macOS</span>
-                    <span>Freq: Incident Based</span>
+                    <div class="form-card">
+                        <h3>2. Employee Onboarding</h3>
+                        <p class="desc">Initiate system access, email, and network permissions.</p>
+                        <a href="employee-registration.html" class="text-link">Open Form &rarr;</a>
+                    </div>
+
+                    <div class="form-card">
+                        <h3>3. Laptop Acknowledgement</h3>
+                        <p class="desc">Liability agreement confirming receipt and condition.</p>
+                        <a href="laptop-acknowledgement.html" class="text-link">Open Form &rarr;</a>
+                    </div>
+
+                    <div class="form-card">
+                        <h3>4. Asset Recovery / Exit</h3>
+                        <p class="desc">Exit clearance log for returning assets upon separation.</p>
+                        <a href="asset-recovery.html" class="text-link">Open Form &rarr;</a>
+                    </div>
                 </div>
-                <a href="macbook_diag_v2.html" class="action-btn btn-secondary">Open Diagnostics</a>
-            </div>
-
-            <div class="form-card">
-                <h3>Mobile & POS Checklist</h3>
-                <p class="desc">Audit for Android/iOS Phones, Tablets, and Handheld POS terminals (Sunmi/Zebra).</p>
-                <div class="card-meta">
-                    <span>Target: Mobile/POS</span>
-                    <span>Freq: Quarterly</span>
-                </div>
-                <a href="mobile_checklist.html" class="action-btn btn-secondary">Open Mobile Form</a>
-            </div>
-
-            <div class="form-card">
-                <h3>CCTV Service Report</h3>
-                <p class="desc">Surveillance system audit covering NVR health, Camera focus/cleanliness, and Recording retention.</p>
-                <div class="card-meta">
-                    <span>Target: Security</span>
-                    <span>Freq: Bi-Monthly</span>
-                </div>
-                <a href="cctv_checklist.html" class="action-btn btn-secondary">Open CCTV Form</a>
-            </div>
-
-            <div class="form-card">
-                <h3>Printer Maintenance</h3>
-                <p class="desc">Service log for Network Printers and Copiers. Covers toner levels, rollers, and print quality tests.</p>
-                <div class="card-meta">
-                    <span>Target: Printers</span>
-                    <span>Freq: Monthly</span>
-                </div>
-                <a href="printer_checklist.html" class="action-btn btn-secondary">Open Printer Form</a>
-            </div>
-        </div>
-
-        <div class="category-header" style="margin-top: 40px;">
-            <span class="cat-icon">📋</span> Asset Lifecycle (HR/Admin)
-        </div>
-
-        <div class="form-grid">
-            <div class="form-card">
-                <h3>1. Asset Handover Form</h3>
-                <p class="desc">Formal record for issuance of IT assets to employees.</p>
-                <a href="item-handover.html" class="text-link">Open Form &rarr;</a>
-            </div>
-
-            <div class="form-card">
-                <h3>2. Employee Onboarding</h3>
-                <p class="desc">Initiate system access, email, and network permissions.</p>
-                <a href="employee-registration.html" class="text-link">Open Form &rarr;</a>
-            </div>
-
-            <div class="form-card">
-                <h3>3. Laptop Acknowledgement Form</h3>
-                <p class="desc">Liability agreement confirming receipt and condition of company laptop.</p>
-                <a href="laptop-acknowledgement.html" class="text-link">Open Form &rarr;</a>
-            </div>
-
-            <div class="form-card">
-                <h3>4. Asset Recovery / Exit</h3>
-                <p class="desc">Exit clearance log for returning assets upon separation.</p>
-                <a href="asset-recovery.html" class="text-link">Open Form &rarr;</a>
             </div>
         </div>
 
@@ -121,6 +138,24 @@
     <footer class="portal-footer">
         <p>&copy; 2026 Chesmi IT Dept. | Internal Use Only | ISO 27001 Controls</p>
     </footer>
+
+    <script>
+        function toggleFolder(folderId, btn) {
+            const content = document.getElementById(folderId);
+            const icon = btn.querySelector('.arrow-icon');
+            
+            // Toggle visibility
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                content.classList.remove('open');
+                icon.style.transform = "rotate(0deg)";
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                content.classList.add('open');
+                icon.style.transform = "rotate(180deg)";
+            }
+        }
+    </script>
 
 </body>
 </html>
