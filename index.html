@@ -139,7 +139,7 @@
         <p>&copy; 2026 Chesmi IT Dept. | Internal Use Only | ISO 27001 Controls</p>
     </footer>
 
-   <script>
+<script>
     function toggleFolder(folderId, btn) {
         const content = document.getElementById(folderId);
         const icon = btn.querySelector('.arrow-icon');
@@ -147,24 +147,25 @@
         // Check if currently open
         if (content.classList.contains('open')) {
             // CLOSE IT
-            content.style.maxHeight = null; // Collapses height
-            content.style.paddingTop = "0"; // Removes padding
+            content.style.maxHeight = null;
+            content.style.paddingTop = "0"; // Remove padding to hide completely
             content.style.paddingBottom = "0"; 
             content.classList.remove('open');
-            icon.style.transform = "rotate(0deg)"; // Reset arrow
+            icon.style.transform = "rotate(0deg)";
         } else {
             // OPEN IT
             content.classList.add('open');
             content.style.paddingTop = "30px"; // Restore padding
             content.style.paddingBottom = "30px";
-            // Calculate height + padding
+            // Calculate total height needed
             content.style.maxHeight = (content.scrollHeight + 60) + "px"; 
-            icon.style.transform = "rotate(180deg)"; // Flip arrow
+            icon.style.transform = "rotate(180deg)";
         }
     }
 </script>
 
 </body>
 </html>
+
 
 
