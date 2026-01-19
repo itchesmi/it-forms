@@ -1,76 +1,272 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Laptop Acknowledgement</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laptop Acknowledgement - Chesmi Groups IT</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .workflow-step { border: 1px solid #eee; padding: 20px; margin-top: 30px; border-radius: 8px; background-color: #fcfcfc; }
+        .workflow-step h3 { margin-top: 0; color: var(--chesmi-dark-red); }
+        .load-file-label { background-color: #007bff; color: white; padding: 12px 25px; font-size: 1em; font-family: 'Poppins', sans-serif; border-radius: 8px; cursor: pointer; display: inline-block; transition: background-color 0.2s; }
+        .load-file-label:hover { background-color: #0056b3; }
+        #loadDataInput { display: none; }
+    </style>
 </head>
 <body>
 
-<form class="a4-page">
+<form class="a4-page" id="laptopAckForm">
     <header>
         <div class="logo-container">
             <img src="chesmi-logo.png" alt="Chesmi Logo">
         </div>
-        <h1>Laptop Acknowledgement</h1>
+        <h1>Employee Laptop Acknowledgement Form</h1>
     </header>
 
-    <h2>1. Assignment Details</h2>
-    <div class="form-group">
-        <label>Employee Name:</label>
-        <div class="input-container"><input type="text" name="empName"></div>
-    </div>
-    <div class="form-group">
-        <label>Department:</label>
-        <div class="input-container"><input type="text" name="dept"></div>
-    </div>
-    
-    <h2>2. Device Information</h2>
-    <div class="form-group">
-        <label>Laptop Model:</label>
-        <div class="input-container"><input type="text" name="model"></div>
-    </div>
-    <div class="form-group">
-        <label>Serial Number:</label>
-        <div class="input-container"><input type="text" name="serial"></div>
-    </div>
-
-    <h3>Specs (IT Use Only)</h3>
-    <table>
-        <tr>
-            <th style="width: 30%">Component</th>
-            <th>Specification</th>
-        </tr>
-        <tr><td>Processor</td><td><input type="text" name="cpu"></td></tr>
-        <tr><td>RAM</td><td><input type="text" name="ram"></td></tr>
-        <tr><td>Storage</td><td><input type="text" name="hdd"></td></tr>
-    </table>
-
-    <h2>3. Declaration</h2>
-    <div style="font-size: 13px; line-height: 1.6; margin-bottom: 30px;">
-        I acknowledge receipt of the device listed above. I understand that:
-        <ul>
-            <li>This device is property of Chesmi Group.</li>
-            <li>It is for business use only.</li>
-            <li>I am liable for physical damage due to negligence.</li>
-        </ul>
-    </div>
-
-    <div class="signature-block">
-        <div class="signature-field">
-            <div class="signature-line"></div>
-            <p class="signature-label">Employee Signature</p>
+    <div id="formFieldsContainer">
+        <h2>Employee & Assignment Details</h2>
+        <div class="form-group">
+            <label for="epfNumber">EPF Number:</label>
+            <div class="input-container"><input type="text" id="epfNumber" name="epfNumber" placeholder="E.g., EPF-00102"></div>
         </div>
-        <div class="signature-field">
-            <div class="input-container"><input type="date"></div>
-            <p class="signature-label">Date</p>
+        <div class="form-group">
+            <label for="employeeName">Employee Name:</label>
+            <div class="input-container"><input type="text" id="employeeName" name="employeeName" placeholder="E.g., Nimal Fernando"></div>
         </div>
-    </div>
+        <div class="form-group">
+            <label for="branch">Branch:</label>
+            <div class="input-container"><input type="text" id="branch" name="branch" placeholder="E.g., Head Office"></div>
+        </div>
+        <div class="form-group">
+            <label for="department">Department:</label>
+            <div class="input-container"><input type="text" id="department" name="department" placeholder="E.g., Sales"></div>
+        </div>
+        <div class="form-group">
+            <label for="designation">Designation:</label>
+            <div class="input-container"><input type="text" id="designation" name="designation" placeholder="E.g., Sales Manager"></div>
+        </div>
+
+        <h2>Laptop Details (Assigned IT Resource)</h2>
+        <div class="form-group">
+            <label for="laptopModel">Model:</label>
+            <div class="input-container"><input type="text" id="laptopModel" name="laptopModel" placeholder="E.g., Dell Latitude 5420" required></div>
+        </div>
+        <div class="form-group">
+            <label for="serialNumber">Serial Number:</label>
+            <div class="input-container"><input type="text" id="serialNumber" name="serialNumber" placeholder="E.g., ABC-7362-XYZ" required></div>
+        </div>
+
+        <h3>Laptop Specification <span style="font-weight:400; font-size: 0.8em;">(Filled By IT Department)</span></h3>
+        <table style="width: 80%;" class="spec-table">
+            <tr><th style="width: 30%;">Item</th><th>Current Status/Spec</th></tr>
+            <tr><td>Processor</td><td><input type="text" name="specProcessor" placeholder="E.g., Core i7 11th Gen"></td></tr>
+            <tr><td>RAM</td><td><input type="text" name="specRAM" placeholder="E.g., 16GB DDR4"></td></tr>
+            <tr><td>ROM/HDD</td><td><input type="text" name="specROM" placeholder="E.g., 512GB NVMe SSD"></td></tr>
+            <tr><td>OS</td><td><input type="text" name="specOS" placeholder="E.g., Windows 10 Pro"></td></tr>
+            <tr><td>Laptop charger</td><td><input type="text" name="specCharger" placeholder="E.g., Yes / P/N: 45W-CHG"></td></tr>
+            <tr><td>Laptop Bag Status</td><td><input type="text" name="specBag" placeholder="E.g., NEW / OLD / N/A"></td></tr>
+            <tr><td colspan="2" style="font-size: 0.9em; border-top: 1px solid #ccc; padding-top: 10px;">
+                Inventory Update Date: <div class="input-container" style="display: inline-block; width: 150px;"><input type="date" name="inventoryDate"></div> | 
+                Updated By: <div class="input-container" style="display: inline-block; width: 150px;"><input type="text" name="inventoryUpdater" placeholder="IT Staff Name"></div>
+            </td></tr>
+        </table>
+
+        <h2 style="margin-top: 30px;">User Acknowledgement (Employee Confirms Acceptance)</h2>
+        <div style="border: 1px solid #ccc; padding: 15px; font-size: 0.9em; line-height: 1.7; border-radius: 6px; background-color: #fdfdfd;">
+            <ul class="acknowledgement-list">
+                <li>I am aware that I am being provided Chesmi Group resources; I will be responsible for the maintenance and security of these resources under the guidance of the IT Division.</li>
+                <li>I understand that any damage, loss, or malfunction must be immediately reported to the IT Division via email with my manager's approval, and I will submit the device for investigation if required.</li>
+                <li>I accept full financial liability for damages caused by my negligence or misuse, and I will use these resources for official business purposes only, in compliance with company policy and the laws of Sri Lanka.</li>
+                <li>I will complete all required user training, including information security and data handling, upon assignment and annually thereafter.</li>
+            </ul>
+        </div>
+
+        <div class="signature-block">
+            <div class="signature-field">
+                <div class="signature-line"></div>
+                <p class="signature-label">Employee Signature</p>
+            </div>
+            <div class="signature-field">
+                <div class="input-container"><input type="date" id="ackDateInput" name="ackDateInput"></div>
+                <p class="signature-label">Date</p>
+            </div>
+        </div>
+        
+        <hr id="page-break-element" style="margin-top: 30px; border-top: 1px solid #e0e0e0;">
+
+        <h2>Laptop Condition Checklist <span style="font-weight:400; font-size: 0.8em;">(IT Department Use)</span></h2>
+        
+        <div class="form-group">
+            <label>Overall Condition:</label>
+            <div class="input-container condition-radios">
+                <input type="radio" id="cond_excellent" name="overallCondition" value="Excellent"><label for="cond_excellent">Excellent</label>
+                <input type="radio" id="cond_good" name="overallCondition" value="Good" checked><label for="cond_good">Good</label>
+                <input type="radio" id="cond_fair" name="overallCondition" value="Fair"><label for="cond_fair">Fair</label>
+                <input type="radio" id="cond_damaged" name="overallCondition" value="Damaged"><label for="cond_damaged">Damaged</label>
+            </div>
+        </div>
+
+        <div class="form-group" style="display: block; margin-top: 15px;">
+            <label for="conditionNotes" style="width: auto; font-weight: 600;">Notes on Condition (Describe any scratches, damage, or functional issues):</label>
+            <textarea id="conditionNotes" name="conditionNotes" rows="4" style="width: 100%;" placeholder="Leave blank if in excellent/good condition with no issues. Note any existing dents, deep scratches, or functional problems here."></textarea>
+        </div>
+        <p style="margin-top: 20px; font-style: italic;">I confirm that I have physically inspected and functionally tested the device. Unless otherwise noted above, all items were found to be in good working condition.</p>
+
+        <div class="signature-block">
+            <div class="signature-field">
+                <div class="signature-line"></div>
+                <p class="signature-label">Tech Support Signature</p>
+            </div>
+            <div class="signature-field">
+                <div class="input-container"><input type="text" placeholder="Tech Support Name (Print)" id="techNameInput" name="techNameInput"></div>
+                <p class="signature-label">Tech Support Name</p>
+            </div>
+            <div class="signature-field">
+                <div class="input-container"><input type="date" id="techDateInput" name="techDateInput"></div>
+                <p class="signature-label">Date</p>
+            </div>
+        </div>
+    </div> 
 </form>
 
-<div class="form-actions no-print">
-    <button onclick="window.print()" id="printBtn">🖨️ Print to PDF</button>
+<div class="no-print">
+    <div class="workflow-step">
+        <h3>Step 1: IT Department Actions</h3>
+        <p>Fill in all the technical details above, then save the data file and email it to the employee.</p>
+        <button type="button" id="saveDataBtn">📄 Save Data File for Employee</button>
+    </div>
+    <div class="workflow-step">
+        <h3>Step 2: Employee Actions</h3>
+        <p>Click below to load the data file you received from IT. Then, review the form, fill the remaining sections, and finalize the document.</p>
+        <label for="loadDataInput" class="load-file-label">📂 Load Data from File</label>
+        <input type="file" id="loadDataInput" accept=".json">
+    </div>
+    <div class="workflow-step">
+        <h3>Step 3: Finalize Document</h3>
+        <p>Once the form is fully completed by both parties, use the buttons below to create the final copy.</p>
+        <div class="form-actions">
+            <button type="button" id="downloadPdfBtn">💾 Download as PDF</button>
+            <button type="button" id="printBtn" class="print-btn">🖨️ Print Form</button>
+        </div>
+    </div>
 </div>
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    window.onload = function () {
+        const saveDataBtn = document.getElementById('saveDataBtn');
+        const loadDataInput = document.getElementById('loadDataInput');
+        const downloadBtn = document.getElementById('downloadPdfBtn');
+        const printBtn = document.getElementById('printBtn');
+
+        saveDataBtn.addEventListener('click', saveDataToFile);
+        loadDataInput.addEventListener('change', loadDataFromFile);
+        downloadBtn.addEventListener('click', () => generatePdf('Chesmi-Laptop-Acknowledgement.pdf'));
+        printBtn.addEventListener('click', () => window.print());
+
+        function saveDataToFile() {
+            const formData = {};
+            const inputs = document.querySelectorAll('#formFieldsContainer input, #formFieldsContainer textarea');
+            inputs.forEach(input => {
+                if (input.name) {
+                    if (input.type === 'checkbox' || input.type === 'radio') {
+                        if(input.checked) {
+                            // For radio buttons, only save the selected value
+                            if(input.type === 'radio') {
+                                formData[input.name] = input.value;
+                            } else {
+                                formData[input.name] = true;
+                            }
+                        } else if (input.type === 'checkbox') {
+                            formData[input.name] = false;
+                        }
+                    } else {
+                        formData[input.name] = input.value;
+                    }
+                }
+            });
+            const dataStr = JSON.stringify(formData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.download = `laptop_data_${formData.employeeName || 'employee'}.json`;
+            link.href = url;
+            link.click();
+            URL.revokeObjectURL(url);
+            alert('Data file has been saved! Please attach this file to your email.');
+        }
+
+        function loadDataFromFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    for (const key in data) {
+                        const input = document.querySelector(`[name="${key}"]`);
+                        const radioInputs = document.querySelectorAll(`[name="${key}"]`);
+                        
+                        if (radioInputs.length > 1 && radioInputs[0].type === 'radio') {
+                            // Handle radio button group
+                            radioInputs.forEach(radio => {
+                                if (radio.value === data[key]) {
+                                    radio.checked = true;
+                                }
+                            });
+                        } else if (input) {
+                            // Handle other inputs
+                            if (input.type === 'checkbox') {
+                                input.checked = data[key];
+                            } else {
+                                input.value = data[key];
+                            }
+                        }
+                    }
+                    alert('Data loaded successfully! Please complete the remaining sections.');
+                } catch (error) {
+                    alert('Error: Could not load or parse the data file.');
+                    console.error("Failed to parse JSON:", error);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        async function generatePdf(fileName) {
+            const { jsPDF } = window.jspdf;
+            const formToCapture = document.querySelector('.a4-page');
+            document.body.classList.add('pdf-snapshot');
+            const canvas = await html2canvas(formToCapture, {
+                scale: 2,
+                useCORS: true,
+                logging: false,
+                width: formToCapture.scrollWidth,
+                height: formToCapture.scrollHeight
+            });
+            document.body.classList.remove('pdf-snapshot');
+            const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+            const canvasWidth = canvas.width;
+            const canvasHeight = canvas.height;
+            const canvasAspectRatio = canvasHeight / canvasWidth;
+            const renderHeight = pdfWidth * canvasAspectRatio;
+            let heightLeft = renderHeight;
+            let position = 0;
+            pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, renderHeight);
+            heightLeft -= pdfHeight;
+            while (heightLeft > 0) {
+                position = -heightLeft;
+                pdf.addPage();
+                pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, renderHeight);
+                heightLeft -= pdfHeight;
+            }
+            pdf.save(fileName);
+        }
+    };
+</script>
 </body>
 </html>
