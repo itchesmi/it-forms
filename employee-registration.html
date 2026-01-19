@@ -2,72 +2,132 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>New Employee Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Registration - Chesmi Groups IT</title>
     <link rel="stylesheet" href="style.css">
     <style>
         .access-table td:nth-child(2), 
         .access-table td:nth-child(3) {
-            width: 60px; text-align: center;
+            width: 50px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-<form class="a4-page">
+<form class="a4-page" id="registrationForm">
     <header>
         <div class="logo-container">
             <img src="chesmi-logo.png" alt="Chesmi Logo">
         </div>
-        <h1>New Employee Registration</h1>
+        <h1>New Employee Registration for IT Department</h1>
     </header>
 
-    <h2>1. Personal Details</h2>
+    <h2>Employee Information <span style="font-weight:400; font-size: 0.8em;">(To be completed by HR/HOD)</span></h2>
     <div class="form-group">
-        <label>Full Name:</label>
-        <div class="input-container"><input type="text"></div>
+        <label for="name">Name:</label>
+        <div class="input-container"><input type="text" id="name" placeholder="E.g., Kamal Perera" required></div>
     </div>
     <div class="form-group">
-        <label>Designation:</label>
-        <div class="input-container"><input type="text"></div>
+        <label for="designation">Designation:</label>
+        <div class="input-container"><input type="text" id="designation" placeholder="E.g., Senior Accountant" required></div>
     </div>
     <div class="form-group">
-        <label>Joining Date:</label>
-        <div class="input-container"><input type="date"></div>
+        <label for="company">Company:</label>
+        <div class="input-container"><input type="text" id="company" placeholder="E.g., Chesmi International (Pvt) Ltd" required></div>
     </div>
     <div class="form-group">
-        <label>Mobile No:</label>
-        <div class="input-container"><input type="tel"></div>
+        <label for="department">Department:</label>
+        <div class="input-container"><input type="text" id="department" placeholder="E.g., Finance / IT" required></div>
+    </div>
+    <div class="form-group">
+        <label for="supervisor">Reporting Supervisor:</label>
+        <div class="input-container"><input type="text" id="supervisor" placeholder="E.g., Mr. Rohan Silva (HOD)" required></div>
+    </div>
+    <div class="form-group">
+        <label for="joiningDate">Joining Date:</label>
+        <div class="input-container"><input type="date" id="joiningDate"></div>
+    </div>
+    <div class="form-group">
+        <label for="resignationDate">Resignation Date:</label>
+        <div class="input-container"><input type="date" id="resignationDate" placeholder="Optional for registration"></div>
+    </div>
+    <div class="form-group">
+        <label for="email">Email Address:</label>
+        <div class="input-container"><input type="email" id="email" placeholder="E.g., k.perera@chesmi.lk" required></div>
+    </div>
+    <div class="form-group">
+        <label for="nicNumber">NIC Number:</label>
+        <div class="input-container"><input type="text" id="nicNumber" placeholder="E.g., 199012345678 or 901234567V" required></div>
+    </div>
+    <div class="form-group">
+        <label for="mobileNumber">Mobile Number:</label>
+        <div class="input-container"><input type="tel" id="mobileNumber" placeholder="E.g., 0771234567" required></div>
+    </div>
+    <div class="form-group">
+        <label for="fingerId">Finger ID:</label>
+        <div class="input-container"><input type="text" id="fingerId" placeholder="E.g., 4056 (To be filled by HR)"></div>
     </div>
 
-    <h2>2. IT Access Requirements</h2>
+    <h2>Access Requirements <span style="font-weight:400; font-size: 0.8em;">(Mark 'Yes' or 'No' - To be completed by IT)</span></h2>
     <table class="access-table">
         <thead>
             <tr>
-                <th>System / Resource</th>
+                <th>Access Type</th>
                 <th>Yes</th>
                 <th>No</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>Company Email</td>
-                <td><input type="radio" name="email" value="yes"></td>
-                <td><input type="radio" name="email" value="no"></td>
+                <td>Nav Access:</td>
+                <td><input type="radio" name="navAccess" value="Yes"></td>
+                <td><input type="radio" name="navAccess" value="No" checked></td>
             </tr>
             <tr>
-                <td>ERP / NAV Access</td>
-                <td><input type="radio" name="erp" value="yes"></td>
-                <td><input type="radio" name="erp" value="no"></td>
+                <td>QB Access (QuickBooks/Accounting):</td>
+                <td><input type="radio" name="qbAccess" value="Yes"></td>
+                <td><input type="radio" name="qbAccess" value="No" checked></td>
             </tr>
             <tr>
-                <td>Laptop Allocation</td>
-                <td><input type="radio" name="laptop" value="yes"></td>
-                <td><input type="radio" name="laptop" value="no"></td>
+                <td>CRM App Access:</td>
+                <td><input type="radio" name="crmAccess" value="Yes"></td>
+                <td><input type="radio" name="crmAccess" value="No" checked></td>
             </tr>
             <tr>
-                <td>Biometric ID</td>
-                <td><input type="radio" name="bio" value="yes"></td>
-                <td><input type="radio" name="bio" value="no"></td>
+                <td>Petty Cash App/FLEET APP Access:</td>
+                <td><input type="radio" name="pettyFleetAccess" value="Yes"></td>
+                <td><input type="radio" name="pettyFleetAccess" value="No" checked></td>
+            </tr>
+            <tr>
+                <td>Shared Network Folder Access:</td>
+                <td><input type="radio" name="shareFolderAccess" value="Yes"></td>
+                <td><input type="radio" name="shareFolderAccess" value="No" checked></td>
+            </tr>
+            <tr>
+                <td>Laptop Provisioning:</td>
+                <td><input type="radio" name="laptopAccess" value="Yes"></td>
+                <td><input type="radio" name="laptopAccess" value="No" checked></td>
+            </tr>
+            <tr>
+                <td>Corporate Email Access:</td>
+                <td><input type="radio" name="emailAccess" value="Yes"></td>
+                <td><input type="radio" name="emailAccess" value="No" checked></td>
+            </tr>
+            <tr>
+                <td>Biometric (Fingerprint) Access:</td>
+                <td><input type="radio" name="fingerprintAccess" value="Yes"></td>
+                <td><input type="radio" name="fingerprintAccess" value="No" checked></td>
+            </tr>
+            <tr>
+                <td>Company Mobile Phone:</td>
+                <td><input type="radio" name="mobilePhone" value="Yes"></td>
+                <td><input type="radio" name="mobilePhone" value="No" checked></td>
+            </tr>
+            <tr>
+                <td>Company SIM Card:</td>
+                <td><input type="radio" name="simCard" value="Yes"></td>
+                <td><input type="radio" name="simCard" value="No" checked></td>
             </tr>
         </tbody>
     </table>
@@ -75,18 +135,88 @@
     <div class="signature-block">
         <div class="signature-field">
             <div class="signature-line"></div>
-            <p class="signature-label">HOD Signature</p>
+            <p class="signature-label">Authorized by IT Department Signature</p>
         </div>
         <div class="signature-field">
             <div class="signature-line"></div>
-            <p class="signature-label">IT Manager Signature</p>
+            <p class="signature-label">Supervisor / Department Head Signature</p>
         </div>
     </div>
 </form>
 
 <div class="form-actions no-print">
-    <button onclick="window.print()" id="printBtn">🖨️ Print Form</button>
+    <button type="button" id="downloadPdfBtn">💾 Download as PDF</button>
+    <button type="button" id="shareEmailBtn" class="email-btn">📧 Share via Email</button>
+    <button type="button" id="printBtn" class="print-btn">🖨️ Print Form</button>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    window.onload = function () {
+        const downloadBtn = document.getElementById('downloadPdfBtn');
+        const shareBtn = document.getElementById('shareEmailBtn');
+        const printBtn = document.getElementById('printBtn');
+
+        downloadBtn.addEventListener('click', () => generatePdf('Chesmi-Employee-Registration.pdf'));
+        shareBtn.addEventListener('click', () => shareViaEmail('New Employee Registration'));
+        printBtn.addEventListener('click', () => window.print());
+
+        async function generatePdf(fileName) {
+            const { jsPDF } = window.jspdf;
+            const formToCapture = document.querySelector('.a4-page');
+            
+            document.body.classList.add('pdf-snapshot');
+
+            const canvas = await html2canvas(formToCapture, {
+                scale: 2,
+                useCORS: true,
+                logging: false,
+                width: formToCapture.scrollWidth,
+                height: formToCapture.scrollHeight
+            });
+
+            document.body.classList.remove('pdf-snapshot');
+
+            const pdf = new jsPDF({
+                orientation: 'p',
+                unit: 'mm',
+                format: 'a4'
+            });
+
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+            const canvasWidth = canvas.width;
+            const canvasHeight = canvas.height;
+            const canvasAspectRatio = canvasHeight / canvasWidth;
+            
+            const renderHeight = pdfWidth * canvasAspectRatio;
+            let heightLeft = renderHeight;
+            let position = 0;
+
+            // Add the first page
+            pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, renderHeight);
+            heightLeft -= pdfHeight;
+
+            // Add new pages if content is longer than one page
+            while (heightLeft > 0) {
+                position = -heightLeft;
+                pdf.addPage();
+                pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, renderHeight);
+                heightLeft -= pdfHeight;
+            }
+            
+            pdf.save(fileName);
+        }
+
+        function shareViaEmail(formType) {
+            const employeeName = document.getElementById('name').value || 'New Employee';
+            const subject = `${formType} for ${employeeName}`;
+            const body = `Dear Team,\n\nPlease find the ${formType} details attached for your review and processing.\n\nThis is a client-generated request. Please download the PDF from the form and attach it to this email before sending.\n\nThank you.`;
+            
+            window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }
+    };
+</script>
 </body>
 </html>
