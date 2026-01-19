@@ -17,7 +17,7 @@
     /* UTILITIES */
     --radius: 8px;
     --shadow: 0 2px 5px rgba(0,0,0,0.05);
-    --shadow-hover: 0 10px 20px rgba(211, 47, 47, 0.1); /* Red tinted shadow */
+    --shadow-hover: 0 10px 20px rgba(211, 47, 47, 0.1);
 }
 
 body {
@@ -28,10 +28,14 @@ body {
     padding: 0;
 }
 
-/* --- NAVIGATION --- */
+/* =========================================
+   PART 1: PORTAL DASHBOARD STYLES
+   ========================================= */
+
+/* NAVIGATION */
 .top-nav {
     background-color: #ffffff;
-    border-bottom: 3px solid var(--primary); /* Red line at bottom */
+    border-bottom: 3px solid var(--primary);
     height: 70px;
     display: flex;
     align-items: center;
@@ -48,18 +52,17 @@ body {
     align-items: center;
 }
 
-/* --- LOGO CSS --- */
 .brand {
     display: flex;
     align-items: center;
     gap: 15px;
-    height: 100%; /* Ensure it fills the nav height */
+    height: 100%;
 }
 
 .nav-logo {
-    max-height: 50px; /* STRICT LIMIT: Fits inside the 70px navbar */
-    width: auto;      /* Maintains aspect ratio */
-    object-fit: contain; /* Prevents stretching */
+    max-height: 50px;
+    width: auto;
+    object-fit: contain;
     display: block;
 }
 
@@ -83,7 +86,7 @@ body {
     gap: 8px;
 }
 
-/* --- MAIN LAYOUT --- */
+/* DASHBOARD LAYOUT */
 .main-container {
     max-width: 1100px;
     margin: 40px auto;
@@ -97,7 +100,7 @@ body {
 .page-header h1 { color: var(--text-main); margin-bottom: 10px; }
 .page-header p { color: var(--text-light); }
 
-/* --- FOLDER SYSTEM --- */
+/* FOLDERS */
 .folder-container {
     margin-bottom: 25px;
     background: white;
@@ -119,10 +122,7 @@ body {
     transition: background 0.2s;
     text-align: left;
 }
-
-.folder-header:hover {
-    background-color: #fafafa;
-}
+.folder-header:hover { background-color: #fafafa; }
 
 .folder-title {
     font-size: 1.1rem;
@@ -145,29 +145,17 @@ body {
     font-size: 1.1rem;
 }
 
-.arrow-icon {
-    color: var(--text-light);
-    transition: transform 0.3s ease;
-}
-
-/* --- UPDATED FOLDER ANIMATION CSS --- */
 .folder-content {
     max-height: 0;
     overflow: hidden;
-    /* Animate padding so it disappears smoothly */
-    transition: max-height 0.3s ease-out, padding 0.3s ease; 
+    transition: max-height 0.3s ease-out, padding 0.3s ease;
     background-color: #fcfcfc;
-    padding: 0 30px; /* Default closed state has 0 vertical padding */
+    padding: 0 30px;
     opacity: 0;
 }
+.folder-content.open { opacity: 1; border-top: 1px solid var(--border); }
 
-.folder-content.open {
-    opacity: 1;
-    border-top: 1px solid var(--border);
-    /* Padding is applied dynamically by JS or can be set here if not using JS calculation */
-}
-
-/* --- GRID & CARDS --- */
+/* CARDS */
 .form-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -184,98 +172,171 @@ body {
     transition: all 0.2s;
     position: relative;
 }
-
 .form-card:hover {
     transform: translateY(-3px);
     box-shadow: var(--shadow-hover);
     border-color: var(--primary-light);
 }
-
-.highlight-card {
-    border-top: 4px solid var(--primary);
-}
+.highlight-card { border-top: 4px solid var(--primary); }
 
 .card-status {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 0.65rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 4px;
+    top: 15px; right: 15px;
+    font-size: 0.65rem; font-weight: bold; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 4px;
 }
 .status-critical { background: #fee2e2; color: #b91c1c; }
 
-.form-card h3 {
-    margin: 15px 0 10px 0;
-    font-size: 1rem;
-    color: var(--text-main);
-}
+.form-card h3 { margin: 15px 0 10px 0; font-size: 1rem; color: var(--text-main); }
+.form-card .desc { font-size: 0.85rem; color: var(--text-light); flex-grow: 1; margin-bottom: 20px; line-height: 1.4; }
 
-.form-card .desc {
-    font-size: 0.85rem;
-    color: var(--text-light);
-    flex-grow: 1;
-    margin-bottom: 20px;
-    line-height: 1.4;
-}
+.card-meta { display: flex; gap: 10px; margin-bottom: 20px; font-size: 0.75rem; color: var(--text-light); }
+.card-meta span { background: #f1f5f9; padding: 3px 8px; border-radius: 4px; display: flex; align-items: center; gap: 5px; }
 
-.card-meta {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    font-size: 0.75rem;
-    color: var(--text-light);
-}
-.card-meta span {
-    background: #f1f5f9;
-    padding: 3px 8px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-/* --- BUTTONS --- */
+/* BUTTONS */
 .action-btn {
-    text-align: center;
-    background-color: var(--primary);
-    color: white;
-    text-decoration: none;
-    padding: 10px;
-    border-radius: 6px;
-    font-weight: 500;
-    font-size: 0.9rem;
+    text-align: center; background-color: var(--primary); color: white;
+    text-decoration: none; padding: 10px; border-radius: 6px; font-weight: 500; font-size: 0.9rem;
     transition: background 0.2s;
 }
 .action-btn:hover { background-color: var(--primary-dark); }
-
-.btn-outline {
-    background-color: white;
-    color: var(--primary);
-    border: 1px solid var(--border);
-}
-.btn-outline:hover {
-    border-color: var(--primary);
-    background-color: var(--primary-light);
-}
-
-.text-link {
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin-top: auto;
-}
+.btn-outline { background-color: white; color: var(--primary); border: 1px solid var(--border); }
+.btn-outline:hover { border-color: var(--primary); background-color: var(--primary-light); }
+.text-link { color: var(--primary); text-decoration: none; font-weight: 600; font-size: 0.9rem; margin-top: auto; }
 .text-link:hover { text-decoration: underline; }
 
-/* --- FOOTER --- */
-.portal-footer {
-    text-align: center;
+.portal-footer { text-align: center; margin-top: 50px; padding: 20px; color: var(--text-light); font-size: 0.8rem; border-top: 1px solid var(--border); }
+
+
+/* =========================================
+   PART 2: PRINTABLE FORMS (A4 STYLES)
+   ========================================= */
+
+.a4-page {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 20mm;
+    margin: 30px auto;
+    background: white;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    box-sizing: border-box;
+    position: relative;
+    color: #333;
+}
+
+/* Form Headers */
+.a4-page header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+.a4-page header h1 {
+    font-size: 24px;
+    color: var(--primary);
+    margin: 0;
+    text-transform: uppercase;
+}
+.a4-page header .logo-container img {
+    height: 50px;
+    width: auto;
+}
+
+/* Form Inputs & Groups */
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.form-group label {
+    width: 150px;
+    font-weight: 600;
+    color: #444;
+}
+.form-group .input-container {
+    flex-grow: 1;
+}
+.a4-page input[type="text"], 
+.a4-page input[type="date"],
+.a4-page input[type="email"] {
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 8px;
+    border-radius: 4px;
+    font-family: inherit;
+    background: #fafafa;
+}
+.a4-page h2 {
+    font-size: 16px;
+    background: #eee;
+    padding: 8px;
+    border-left: 4px solid var(--primary);
+    margin: 25px 0 15px 0;
+    color: #333;
+}
+
+/* Tables */
+.handover-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+.handover-table th {
+    background: var(--primary);
+    color: white;
+    padding: 10px;
+    text-align: left;
+    border: 1px solid var(--primary);
+}
+.handover-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+/* Signatures */
+.signature-block {
+    display: flex;
+    justify-content: space-between;
     margin-top: 50px;
-    padding: 20px;
-    color: var(--text-light);
-    font-size: 0.8rem;
-    border-top: 1px solid var(--border);
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    gap: 20px;
+}
+.signature-field {
+    flex: 1;
+    text-align: center;
+}
+.signature-line {
+    border-bottom: 1px solid #333;
+    height: 40px;
+    margin-bottom: 5px;
+}
+.signature-label {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+}
+
+/* Print Overrides */
+@media print {
+    body { background: white; }
+    .top-nav, .no-print, .form-actions { display: none !important; }
+    .a4-page {
+        margin: 0;
+        box-shadow: none;
+        width: 100%;
+        height: auto;
+        padding: 0;
+        border: none;
+    }
+    .a4-page input {
+        border: none !important;
+        border-bottom: 1px solid #000 !important;
+        background: transparent !important;
+        padding: 0 !important;
+    }
 }
